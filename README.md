@@ -5,6 +5,7 @@
 <img src="https://img.shields.io/github/issues-pr/dvdkitay/land-fragment-script" />
 <div>
 
+![Иллюстрация к проекту](https://raw.githubusercontent.com/dvdkitay/land-fragment-script/master/pictures/file1/1.jpg)
 
 ## Скрипт для обрезания карты по координатам
 
