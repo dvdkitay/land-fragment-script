@@ -43,9 +43,7 @@ def start(PROXIES, FILENAME, MAPS, LANG, SIZE, SKAL):
                 else:
                     api_url = f"https://static-maps.yandex.ru/1.x/?ll={X},{Y}&l={MAPS}&lang={LANG}&z={SKAL}&l=map&size={SIZE}"
                     res = requests.get(api_url)
-                    
-                print(api_url)
-                                
+                                                    
                 if int(res.status_code) != 200:
     
                     with open(f"log/geojson_logs.json", "a") as file:
