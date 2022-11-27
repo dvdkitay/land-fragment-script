@@ -20,54 +20,50 @@ def start(PROXIES, FILENAME, MAPS, LANG, SIZE, SKAL):
         pass
     
     try:
-    
-        with open(os.path.join("geojson_data", FILENAME), 'r') as FILE:
-            lines = FILE.readlines()
+        with open(os.path.join("geojson_data", FILENAME), 'r', encoding='utf-8') as FILE:
+            text_to_json = json.loads(FILE.read())
+
+            for j in text_to_json:
             
-            for line in lines:
-                json_line = json.loads(line.strip())
+                    ID = j["id"]
+                    X = j["center"]["x"]
+                    Y = j["center"]["y"]
+                    
+                    PROXIES = True if PROXIES == "True" else False
                 
-                ID = json_line[0]["id"]
-                X = json_line[0]["center"]["x"]
-                Y = json_line[0]["center"]["y"]
-                
-                PROXIES = True if PROXIES == "True" else False
-            
-                if PROXIES:
-                    PROXIES = {
-                        'http': f'http://{LOGIN}:{PASSWORD}@{IP}:{PORT}',
-                        'https': f'https://{LOGIN}:{PASSWORD}@{IP}:{PORT}',
-                    }
-                    api_url = f"https://static-maps.yandex.ru/1.x/?ll={X},{Y}&l={MAPS}&lang={LANG}&z={SKAL}&l=map&size={SIZE}"
-                    res = requests.get(api_url, proxies=PROXIES)
-                else:
-                    api_url = f"https://static-maps.yandex.ru/1.x/?ll={X},{Y}&l={MAPS}&lang={LANG}&z={SKAL}&l=map&size={SIZE}"
-                    res = requests.get(api_url)
-                                                    
-                if int(res.status_code) != 200:
-    
-                    with open(f"log/geojson_logs.json", "a") as file:
-                        current_datetime = time.time()
-                        text_log = {
-                            "status_code": res.status_code,
-                            "id": ID,
-                            "x": X,
-                            "y": Y,
-                            "message": "Карта не может прочитать координаты",
-                            "datetime": current_datetime
+                    if PROXIES:
+                        PROXIES = {
+                            'http': f'http://{LOGIN}:{PASSWORD}@{IP}:{PORT}',
+                            'https': f'https://{LOGIN}:{PASSWORD}@{IP}:{PORT}',
                         }
-                        
-                        file.write(str(text_log))
-                        exit(1)
-            
-                with io.open(f"pictures/{FILENAME_CREATE_FOLDER}/{ID}.jpg", "wb") as file:
-                    file.write(res.content)
+                        api_url = f"https://static-maps.yandex.ru/1.x/?ll={X},{Y}&l={MAPS}&lang={LANG}&z={SKAL}&l=map&size={SIZE}"
+                        res = requests.get(api_url, proxies=PROXIES)
+                    else:
+                        api_url = f"https://static-maps.yandex.ru/1.x/?ll={X},{Y}&l={MAPS}&lang={LANG}&z={SKAL}&l=map&size={SIZE}"
+                        res = requests.get(api_url)
+                                                        
+                    if int(res.status_code) != 200:
+        
+                        with open(f"logs/geojson_logs.json", "a") as file:
+                            current_datetime = time.time()
+                            text_log = {
+                                "status_code": res.status_code,
+                                "id": ID,
+                                "x": X,
+                                "y": Y,
+                                "message": "Карта не может прочитать координаты",
+                                "datetime": current_datetime
+                            }
+                            
+                            file.write(str(text_log))
                 
-                time.sleep(0.3)
+                    with io.open(f"pictures/{FILENAME_CREATE_FOLDER}/{ID}.jpg", "wb") as file:
+                        file.write(res.content)
+                    
+                    time.sleep(0.3)
                 
     except Exception as err:
-        with open(f"log/system_logs.json", "a") as file:
-
+        with open(f"logs/system_logs.json", "a") as file:
             current_datetime = time.time()
             text_log = {
                 "error": err,

@@ -42,7 +42,7 @@ def start_stream(PROXIES, MAPS, LANG, SIZE, SKAL):
     except Exception as err:
         logging.error(err)
         
-        with open(f"log/system_logs.json", "a") as file:
+        with open(f"logs/system_logs.json", "a") as file:
             current_datetime = time.time()
             
             text_log = {
@@ -66,4 +66,4 @@ if __name__ == '__main__':
     if not start_stream(PROXIES, MAPS, LANG, SIZE, SKAL):
         logging.error("Программа завершилась с ошибкой")
     else:
-        logging.warning("Программа успешно отработала")
+        logging.warning("Программа успешно отработала. Проверте файлы в папке на наличие ошибок /logs")
