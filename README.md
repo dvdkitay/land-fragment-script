@@ -5,6 +5,7 @@
 <img src="https://img.shields.io/github/issues-pr/dvdkitay/land-fragment-script" />
 <div>
 
+
 ## Скрипт для обрезания карты по координатам
 
 Программа для получения снимков с карты земли по координатам в необходимом размере
