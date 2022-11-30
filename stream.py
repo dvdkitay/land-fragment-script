@@ -56,9 +56,10 @@ def start(PROXIES, FILENAME, MAPS, LANG, SIZE, SKAL):
                             }
                             
                             file.write(str(text_log))
-                
-                    with io.open(f"pictures/{FILENAME_CREATE_FOLDER}/{ID}.jpg", "wb") as file:
-                        file.write(res.content)
+
+                    else:
+                        with io.open(f"pictures/{FILENAME_CREATE_FOLDER}/{ID}.jpg", "wb") as file:
+                            file.write(res.content)
                     
                     time.sleep(0.3)
                 
