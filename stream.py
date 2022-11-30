@@ -43,7 +43,7 @@ def start(PROXIES, FILENAME, MAPS, LANG, SIZE, SKAL):
                         res = requests.get(api_url)
                                                         
                     if int(res.status_code) != 200:
-        
+                        print(res.status_code)
                         with open(f"logs/geojson_logs.json", "a") as file:
                             current_datetime = time.time()
                             text_log = {
@@ -58,6 +58,7 @@ def start(PROXIES, FILENAME, MAPS, LANG, SIZE, SKAL):
                             file.write(str(text_log))
 
                     else:
+                        print(res.status_code)
                         with io.open(f"pictures/{FILENAME_CREATE_FOLDER}/{ID}.jpg", "wb") as file:
                             file.write(res.content)
                     
